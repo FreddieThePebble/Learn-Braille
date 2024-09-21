@@ -14,9 +14,9 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0; /* Light mode default background */
-            position: relative; /* For positioning the icons */
+            position: relative;
             color: #000; /* Light mode text color */
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            transition: background-color 0.3s, color 0.3s;
         }
         .dark-mode {
             background-color: #333; /* Dark mode background */
@@ -43,7 +43,7 @@
             background-color: #0056b3;
         }
         #question, #keyboard {
-            display: none; /* Hide elements by default */
+            display: none;
         }
         #question {
             font-size: 2em;
@@ -53,8 +53,8 @@
             display: grid;
             grid-template-columns: repeat(6, 50px);
             gap: 10px;
-            justify-content: center; /* Center the keyboard */
-            margin: 0 auto; /* Center the keyboard horizontally */
+            justify-content: center;
+            margin: 0 auto;
         }
         .key {
             width: 50px;
@@ -62,13 +62,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ffffff; /* Light mode key color */
+            background-color: #ffffff;
             border: 2px solid #007bff;
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
-            transition: background-color 0.3s; /* Smooth transition for keys */
-            text-align: center; /* Center text within the key */
+            transition: background-color 0.3s;
+            text-align: center;
         }
         .key.correct {
             background-color: #28a745;
@@ -85,31 +85,40 @@
             border-color: #007bff;
             color: #fff; /* Dark mode key text color */
         }
+        .dark-mode .key.correct {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+        .dark-mode .key.incorrect {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
         #youtube-icon {
-            position: fixed; /* Fix the icon to the screen */
+            position: fixed;
             cursor: pointer;
-            bottom: 20px; /* Distance from the bottom */
-            right: 20px; /* Distance from the right */
+            bottom: 20px;
+            right: 20px;
         }
         #mode-icon, #refresh-icon {
             cursor: pointer;
-            margin-right: 10px; /* Space between icons */
+            margin-right: 10px;
         }
         #controls {
-            position: fixed; /* Fix the controls to the bottom left */
-            bottom: 20px; /* Distance from the bottom */
-            left: 20px; /* Distance from the left */
-            display: flex; /* Align icons horizontally */
-            align-items: center; /* Center align items vertically */
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
         }
         footer {
             position: absolute;
             bottom: 10px;
             color: grey;
             font-size: 14px;
-            cursor: pointer; /* Change cursor to pointer for the footer */
+            cursor: pointer;
         }
-        /* Center alignment for the bottom keys */
         .bottom-row {
             display: flex;
             justify-content: center;
@@ -136,11 +145,9 @@
     <audio id="click-sound" src="https://raw.githubusercontent.com/FreddieThePebble/Learn-Braille/refs/heads/main/Click.mp3"></audio>
 
     <script>
-        // Braille to English mapping using the provided order
         const brailleLetters = "⠟⠺⠑⠗⠞⠽⠥⠊⠕⠏⠁⠎⠙⠋⠛⠓⠚⠅⠇⠵⠭⠉⠧⠃⠝⠍";
         const englishLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        // Create mapping objects based on the provided order
         const brailleToEnglishMap = {};
         for (let i = 0; i < englishLetters.length; i++) {
             brailleToEnglishMap[brailleLetters[i]] = englishLetters[i];
@@ -156,14 +163,14 @@
 
         function playClickSound() {
             const sound = document.getElementById("click-sound");
-            sound.currentTime = 0; // Reset sound to play from the beginning
+            sound.currentTime = 0;
             sound.play();
         }
 
         function setMode(selectedMode) {
             playClickSound();
             mode = selectedMode;
-            document.getElementById("mode-buttons").style.display = 'none'; // Hide mode buttons
+            document.getElementById("mode-buttons").style.display = 'none';
             document.getElementById("question").style.display = 'block';
             document.getElementById("keyboard").style.display = 'grid';
             generateQuestion();
@@ -174,16 +181,15 @@
                 const letters = englishLetters.split("");
                 currentLetter = letters[Math.floor(Math.random() * letters.length)];
                 document.getElementById("question").innerHTML = currentLetter;
-                generateBrailleKeyboard(true); // Randomized Braille Keyboard
+                generateBrailleKeyboard(true);
             } else if (mode === "braille-to-english") {
                 const brailles = brailleLetters.split("");
                 currentLetter = brailles[Math.floor(Math.random() * brailles.length)];
                 document.getElementById("question").innerHTML = currentLetter;
-                generateEnglishKeyboard(); // Fixed English Keyboard
+                generateEnglishKeyboard();
             }
         }
 
-        // Function to shuffle the Braille letters for random keyboard arrangement
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -199,11 +205,9 @@
             let brailleKeys = brailleLetters.split("");
             
             if (randomize) {
-                // Shuffle the Braille letters if randomize is true
                 brailleKeys = shuffle(brailleKeys);
             }
 
-            // Create a keyboard with Braille characters
             brailleKeys.forEach(braille => {
                 const key = document.createElement("div");
                 key.className = "key";
@@ -217,7 +221,6 @@
             const keyboard = document.getElementById("keyboard");
             keyboard.innerHTML = "";
 
-            // Create a fixed keyboard with English characters
             englishLetters.split("").forEach(letter => {
                 const key = document.createElement("div");
                 key.className = "key";
